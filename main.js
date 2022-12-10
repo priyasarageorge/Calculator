@@ -32,7 +32,10 @@ equalsButton.addEventListener('click', button => {
 
 window.addEventListener('keydown', function(e){
     const key = document.querySelector(`button[value='${e.key}']`);
-    if(key) key.click();
+    if(key) {
+        key.focus();
+        key.click();
+    }
 });
 
 allClearButton.addEventListener('click', button => {

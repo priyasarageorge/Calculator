@@ -7,7 +7,10 @@
     width: 50%;
     margin-left: 25%;
 }
-
+button:focus {
+  outline: none;
+  background: #ffdd00; /* gold */
+}
 h1 {
     color: #5a5a5a;
 }
