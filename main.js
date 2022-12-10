@@ -93,6 +93,9 @@ function chooseOperation(x) {
     if(currentOperand == '' && previousOperand!='' && operation==''){
         currentOperand=previousOperand;
     }
+    if(operation !=x){
+        operation = x;
+    }
     if (currentOperand == '' && x!='-') {
         return;
     } else if(currentOperand=='' && x=='-' && operation) return;
