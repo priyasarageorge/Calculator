@@ -4,6 +4,8 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    width: 50%;
+    margin-left: 25%;
 }
 
 h1 {

@@ -13,21 +13,21 @@ const operatorsArray = ['-', '+', '/', '*'];
 
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
-        appendOperand(button.innerText)
-        updateDisplay()
+        appendOperand(button.innerText);
+        updateDisplay();
     })
 })
 
 operationButtons.forEach(button => {
     button.addEventListener('click', () => {
-        chooseOperation(button.innerText)
-        updateDisplay()
+        chooseOperation(button.innerText);
+        updateDisplay();
     })
   })
   
 equalsButton.addEventListener('click', button => {
-    compute()
-    updateDisplay()
+    compute();
+    updateDisplay();
 })
 
 window.addEventListener('keydown', function(e){
@@ -36,68 +36,69 @@ window.addEventListener('keydown', function(e){
 });
 
 allClearButton.addEventListener('click', button => {
-    clear()
-    updateDisplay()
+    clear();
+    updateDisplay();
 })
 
 deleteButton.addEventListener('click', button => {
-    deleteKey()
-    updateDisplay()
+    deleteKey();
+    updateDisplay();
 })
 
 function appendOperand(operand) {
     if (operand == '.' && currentOperand.toString().includes('.')) return
     currentOperand = currentOperand.toString() + operand.toString()
     if(previousOperand==''){
-        compute()
+        compute();
     }
 }
 
 function updateDisplay() {
     mainDisplayCurrent.innerText =
-        getDisplayNumber(currentOperand)
+        getDisplayNumber(currentOperand);
     if (operation != null) {
         mainDisplayPrev.innerText =
-        `${getDisplayNumber(previousOperand)} ${operation}`
+        `${getDisplayNumber(previousOperand)} ${operation}`;
     } else {
-        mainDisplayPrev.innerText = ''
+        mainDisplayPrev.innerText = '';
     }
 }
 
 
 function getDisplayNumber(number) {
-    const stringNumber = number.toString()
-    const integerDigits = parseFloat(stringNumber.split('.')[0])
-    const decimalDigits = stringNumber.split('.')[1]
-    let integerDisplay
+    const stringNumber = number.toString();
+    const integerDigits = parseFloat(stringNumber.split('.')[0]);
+    const decimalDigits = stringNumber.split('.')[1];
+    let integerDisplay;
     if(number=='zero-division') {
         clear();
-        return `division by zero!!`
+        return `division by zero!!`;
     }
     if (isNaN(integerDigits)) {
-        integerDisplay = ''
+        integerDisplay = '';
     } else {
-        integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
+        integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 });
     }
     if (decimalDigits != null) {
-        return `${integerDisplay}.${decimalDigits}`
+        return `${integerDisplay}.${decimalDigits}`;
     } else {
-        return integerDisplay
+        return integerDisplay;
     }
   }
 
 function chooseOperation(x) {
     if(currentOperand == '' && previousOperand!='' && operation==''){
-        currentOperand=previousOperand
+        currentOperand=previousOperand;
     }
-
-    if (currentOperand == '' && x!='-') return
+    if (currentOperand == '' && x!='-') {
+        return;
+    } else if(currentOperand=='' && x=='-' && operation) return;
     if (previousOperand !== '') {
-        compute()
+        compute();
     }
-    operation = x
-    previousOperand = currentOperand
-    currentOperand = ''
+    operation = x;
+    previousOperand = currentOperand;
+    currentOperand = '';
   }
 
 function clear() {
@@ -108,36 +109,36 @@ function clear() {
 
 function compute() {
     let computation = 0;
-    const previous = parseFloat(previousOperand) || parseFloat(0.000)
-    const current = parseFloat(currentOperand)
-    if (isNaN(previous) || isNaN(current)) return
+    const previous = parseFloat(previousOperand) || parseFloat(0.000);
+    const current = parseFloat(currentOperand);
+    if (isNaN(previous) || isNaN(current)) return;
     switch (operation) {
         case '+':
-        computation = previous + current
-        break
+        computation = previous + current;
+        break;
         case '-':
-        computation = previous - current
-        break
+        computation = previous - current;
+        break;
         case '*':
-        computation = previous * current
-        break
+        computation = previous * current;
+        break;
         case '/':
-        computation = current == 0 ? NaN : previous / current
-        break
+        computation = current == 0 ? NaN : previous / current;
+        break;
         default:
-        return
+        return;
     }
-    currentOperand = isNaN(computation) ? 'zero-division' : (Number(computation) == computation && computation % 1 != 0) ? computation.toFixed(3) : computation
-    operation = undefined
-    previousOperand = ''
+    currentOperand = isNaN(computation) ? 'zero-division' : (Number(computation) == computation && computation % 1 != 0) ? computation.toFixed(3) : computation;
+    operation = undefined;
+    previousOperand = '';
 }
 
 function deleteKey() {
     if(mainDisplayCurrent.innerText) {
-        currentOperand = currentOperand.toString().slice(0, -1)
+        currentOperand = currentOperand.toString().slice(0,-1);
     } else if (operatorsArray.includes(mainDisplayPrev.innerText.slice(-1))){
-        operation = ''
+        operation = '';
     } else {
-        previousOperand =previousOperand.toString().slice(0,-1)
+        previousOperand =previousOperand.toString().slice(0,-1);
     }
 }
